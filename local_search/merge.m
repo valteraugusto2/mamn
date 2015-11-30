@@ -34,7 +34,7 @@ function out_ind = merge(in_ind, dados)
     % mas utilizarei qtde_cent pra facilitar algumas coisas. Depois tirarei
     % a linha extra.
     % Sera um novo individuo para cada centroide
-    new_ind = inf*ones(qtde_cent, dim_cent, qtde_cent);
+    new_inds = inf*ones(qtde_cent, dim_cent, qtde_cent);
 
     % Gerando nova matriz de pertinencia, fundindo clusters mais proximos
     % Iterando nos centroides do individuo
@@ -56,26 +56,41 @@ function out_ind = merge(in_ind, dados)
     for i = 1:qtde_cent
         for j = 1:dim_cent
             for k = unique(pertinencia_(i,:))
-                new_ind(k, j, i) = 0;
+                new_inds(k, j, i) = 0;
                 for z = 1:qtde_dados
                     if pertinencia_(i,z) == k
-                        new_ind(k,j,i) = new_ind(k,j,i) + dados(z,j);             
+                        new_inds(k,j,i) = new_inds(k,j,i) + dados(z,j);             
                         count = count + 1;
                     end
                 end
-                new_ind(k,j,i) = new_ind(k,j,i)/count;
+                new_inds(k,j,i) = new_inds(k,j,i)/count;
                 count = 0;
             end
         end
     end
 
     % Retirando linhas com infinito dos novos individuos
-    new_ind = reshape(new_ind, 1, qtde_cent*qtde_cent*dim_cent);
+    new_inds = reshape(new_inds, 1, qtde_cent*qtde_cent*dim_cent);
     inf_ind = [];
-    for i = 1:size(new_ind,2)
-        if new_ind(i) == inf
+    for i = 1:size(new_inds,2)
+        if new_inds(i) == inf
             inf_ind = [inf_ind i];
         end
     end
-    new_ind(inf_ind) = [];
-    new_ind = reshape(new_ind, qtde_cent-1, dim_cent, qtde_cent)
+    new_inds(inf_ind) = [];
+
+    % Criando variavel que armazena qtde de individuos, pra deixar a leitura
+    % mais clara.
+    qtde_ind = qtde_cent;
+    new_inds = reshape(new_inds, qtde_cent-1, dim_cent, qtde_ind);
+
+    % Criando uma lista com os individuos new_inds para pegar o de maior
+    % aptidao.
+    new_inds_list = {};
+    for i = 1:qtde_ind
+        new_inds_list{i} = new_inds(:,:,i);
+    end
+
+    % Avaliando o melhor individuo dentre aqueles em new_inds
+
+    out_ind = pega_melhor(new_inds_list)
