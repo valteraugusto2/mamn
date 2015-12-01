@@ -1,0 +1,33 @@
+Uso do controlador_busca_local.m:
+
+- Recebe:
+    
+    - um indivíduo (formato de matriz);
+    - a melhor aptidão até o momento;
+    - nome do arquivo de pesos;
+    - dados.
+
+- Retorna:
+
+    - um indivíuo.
+
+Caso o arquivo de pesos não exista ainda (se for a primeira geração), ele é
+criado com o nome fornecido.
+
+O indivíduo tá no formato de matriz: número de linhas igual à quantidade de
+centroides.
+
+Os dados estão em matriz: cada dado numa linha. O número de colunas (dimensão
+dos dados) deve ser igual ao número de colunas do indivíduo (dimensão dos
+centroides).
+
+O indivíduo obtido na saída normalmente está melhorado, ou seja, passou por
+algum operador local e pelo k-means. Mas, caso os pesos de ambos os operadores
+locais (merge e split) sejam iguais a zero, a probabilidade de passar por nenhum
+operador local é 90% (5% merge, 5% split).
+
+Outra condição especial é quando
+não há nenhuma linha no arquivo referente ao número de clusters do indivíduo.
+Nesse caso, o indivíduo passa pelos dois operadores locais, o arquivo é
+atualizado, mas o indivíduo final não sofre modificações. Isso serve somente
+para inicializar o arquivo. Foi o que eu entendi do artigo original.
