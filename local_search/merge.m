@@ -1,23 +1,29 @@
 %{
 Funcao para realizar merge de clusters num individuo.
 Recebe: individuo (matriz), dados; 
-Retorna: individuo.
+Retorna: individuo e tempo gasto.
 
 Para saber quais clusters serao fundidos, precisa calcular aptidao de cada
 cluster com seu cluster mais proximo. A melhor fusao sera escolhida.
+
+Lista de saida:
+elemento 1: individuo
+elemento 2: tempo
 %}
 
-function out_ind = merge(in_ind, dados)
+function out_list = merge(in_ind, dados)
     
+    % Gravando tempo
+    tic;
     %genpath(addpath('..'));
     % Verificando se individuo eh unica linha ou matriz.
     if size(in_ind,1) == 1
         in_ind = ind2mat(in_ind, dim_cent);
     end
-
+    
     qtde_cent = size(in_ind,1);
     qtde_dados = size(dados, 1);
-    dim_cent = size(in_ind, 2)
+    dim_cent = size(in_ind, 2);
     
     % Encontrando o cluster mais proximo a cada um dos clusters
     indices = proximos(in_ind);
@@ -93,4 +99,6 @@ function out_ind = merge(in_ind, dados)
 
     % Avaliando o melhor individuo dentre aqueles em new_inds
 
-    out_ind = pega_melhor(new_inds_list)
+    out_ind = pega_melhor(new_inds_list);
+    out_list{1} = out_ind;
+    out_list{2} = toc;

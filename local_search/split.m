@@ -1,7 +1,7 @@
 %{
 Realiza split num individuo. 
 Recebe: um individuo, dados;
-Retorna: um individuo com um centroide a mais.
+Retorna: um individuo com um centroide a mais, tempo gasto.
 
 O individuo retornado eh aquele que, depois de dividido, obtiver a melhor
 aptidao. Inicialmente todos os centroides serao divididos.
@@ -9,9 +9,16 @@ aptidao. Inicialmente todos os centroides serao divididos.
 O calculo dos novos centroides sera feito baseado no maior desvio padrao obtido
 dentre as dimensoes de cada centroide. Para isso, eh preciso calcular a
 pertinencia dos dados a cada centroide. 
+
+Lista de saida:
+elemento 1: individuo
+elemento 2: tempo
 %}
 
-function out_ind = split(ind, dados)
+function out_list = split(ind, dados)
+
+    % Gravando tempo
+    tic;
 
     no_cent = size(ind,1);
     dim_cent = size(ind,2);
@@ -88,6 +95,8 @@ function out_ind = split(ind, dados)
     end
 
     out_ind = pega_melhor(new_inds_list);
+    out_list{1} = out_ind;
+    out_list{2} = toc;
 
 
 
