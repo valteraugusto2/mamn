@@ -36,7 +36,22 @@ function new_ind = kmeans(ind, dados)
     new_ind = zeros(no_cent, dim_cent);
     for i = 1:size(lista_pert,2)
         for j = 1:dim_cent
-            new_ind(i,j) = mean(lista_pert{i}(:,j));
+            
+            % Pode haver centroides sem pertinencia. 
+            if isempty(lista_pert{i}(:,j)) == 0
+                new_ind(i,j) = mean(lista_pert{i}(:,j));
+            end
+        end
+    end
+
+    % Corrigindo centroides que nao tiveram pertinencia de nenhum dado
+    % Se a i-esima linha de ind nao estiver em pertinencia_, quer dizer que
+    % nenhum dado foi atribuido ao i-esimo cluster. Logo, ele deve permanecer
+    % inalterado.
+
+    for i = 1:size(ind,1)
+        if ismember(i, pertinencia_) == 0
+            new_ind(i,:) = ind(i,:);
         end
     end
 

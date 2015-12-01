@@ -102,5 +102,8 @@ function new_ind = controlador_busca_local(ind, melhor_aptidao, arq_pesos, dados
 
     end
 
+    % No final de tudo, aplica k-means pra refinar os centroides.
+    
+    new_ind = kmeans(new_ind, dados);
 
 
