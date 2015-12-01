@@ -1,17 +1,17 @@
 %{
 Calcula a recompensa de um dado operador local.
-Recebe: individuo, melhor fitness, um char 's' ou 'm' (split ou merge) e dados
+Recebe: individuo, melhor fitness, um inteiro 0 ou 1 (merge ou split) e dados
 Retorna: recompensa (escalar real)
 %}
 
 function rec = recompensa(ind, melhor_aptidao, op_loc, dados)
 
-    if op_loc == 's'
+    if op_loc == 1
         list = split(ind, dados);
-    elseif op_loc == 'm'
+    elseif op_loc == 0
         list = merge(ind, dados);
     else
-        error ('Operador local: deve ser m ou s');
+        error ('Operador local: deve ser 0 (merge) ou 1 (split)');
     end
 
     % Lembrando que list{1} eh o new_ind; list{2} eh o tempo gasto

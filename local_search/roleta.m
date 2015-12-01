@@ -1,7 +1,7 @@
 %{
 Determina qual operador local sera utilizado.
 Recebe: vetor com dois pesos (um pra cada operador. primeiro merge depois split)
-Retorna: char s, m ou n.
+Retorna: inteiro 0 (merge), 1(split) ou 2 (nenhum).
 
 Caso um peso seja nulo, sua probabilidade eh 0,05. Caso ambos sejam nulos, a
 probabilidade de cada um eh 0,05, e a probabilidade de nenhum eh 0,9. Esse eh o
@@ -27,9 +27,9 @@ function escolha = roleta(pesos)
     end
 
     if x <= s
-        escolha = 's';
+        escolha = 1;
     elseif x > m
-        escolha = 'm';
+        escolha = 0;
     elseif x > s & x < m
-        escolha = 'n';
+        escolha = 2;
     end
