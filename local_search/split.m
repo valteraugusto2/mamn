@@ -54,7 +54,7 @@ function out_list = split(ind, dados)
 
     % Vetor que armazenara a dimensao que apresenta maior desvio padrao para
     % cada centroide
-    dim_max = zeros(1,no_cent);
+    dim_max = ones(1,no_cent);
 
     for i = 1:size(lista_pert,2)
         for j = 1:dim_cent

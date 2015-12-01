@@ -75,6 +75,19 @@ function out_list = merge(in_ind, dados)
         end
     end
 
+    % Caso tenha havido centroide sem nenhum dado, seu valor sera infinito,
+    % causando erro. Para resolver, preciso manter os centroides com o valor de
+    % antes. O unico centroide que deve permanecer infinito eh o centroide mais
+    % proximo. 
+
+    for k = 1:qtde_cent
+        for i = 1:qtde_cent 
+            if (new_inds(i,1,k) == inf) & (indices(k) ~= i)
+                new_inds(i,:,k) = in_ind(i,:);
+            end
+        end
+    end
+
     % Retirando linhas com infinito dos novos individuos
     new_inds = reshape(new_inds, 1, qtde_cent*qtde_cent*dim_cent);
     inf_ind = [];
