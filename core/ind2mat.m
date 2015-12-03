@@ -8,4 +8,7 @@ function ind_mat = ind2mat(ind, dim_cent)
     
     no_lines = qtde_cent(ind, dim_cent);
     no_col = dim_cent;
-    ind_mat = reshape(ind, no_lines, no_col);
+
+    % Reshape faz o rearranjo por coluna. Entao preciso colocar o numero de
+    % linhas igual ao de colunas e depois faco a transposta
+    ind_mat = transpose(reshape(ind, no_col, no_lines));
